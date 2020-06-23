@@ -20,9 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get("/external-books", "BooksController@HandleExternalCall");
 
 Route::get("/books", "BooksController@GetAll");
 Route::post("/books", "BooksController@AddNewBook");
 Route::get("/books/{id}", "BooksController@GetBookById");
 Route::put("/books/{id}", "BooksController@UpdateBook");
 Route::delete("/books/{id}", "BooksController@Delete");
+

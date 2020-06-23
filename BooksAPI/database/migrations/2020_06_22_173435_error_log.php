@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Book extends Migration
+class ErrorLog extends Migration
 {
     /**
      * Run the migrations.
@@ -15,18 +15,14 @@ class Book extends Migration
     {
         //
         /*
-        Schema::create("books", function(Blueprint $table){
-
-            $table->bigIncrements("id");
-            $table->string("name");
-            $table->string("country");
-            
-            $table->string("publisher");
-            $table->integer("number_of_pages");
-            $table->dateTime("release_date");
-
-
-        });*/
+        Schema::create("errorlogs", function(Blueprint $table){
+                $table->bigIncrements("id");
+                $table->string("MethodName");
+                $table->string("ErrorMessage");
+                $table->string("ErrorDetails");
+                $table->string("dateLogged");
+        });
+        */
     }
 
     /**

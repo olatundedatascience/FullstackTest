@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsbnToBooksTable extends Migration
+class UpdateErrorlogs extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,15 @@ class AddIsbnToBooksTable extends Migration
      */
     public function up()
     {
-        Schema::table('books', function (Blueprint $table) {
+        /*
+        Schema::table('errorlogs', function (Blueprint $table) {
             //
-            $table->addColumn("string","isbn");
+            /*
+           $table->dropColumn("dateLogged");
+           $table->string("dateLogged");
+           
         });
+        */
     }
 
     /**
@@ -26,7 +31,7 @@ class AddIsbnToBooksTable extends Migration
      */
     public function down()
     {
-        Schema::table('books', function (Blueprint $table) {
+        Schema::table('errorlogs', function (Blueprint $table) {
             //
         });
     }

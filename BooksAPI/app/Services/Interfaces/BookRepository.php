@@ -4,6 +4,8 @@ namespace App\Services\Repo;
 use App\Books;
 use App\Services\IBookRepository;
 use App\Authors;
+use App\ErrorLogs;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +19,18 @@ class BookRepository implements IBookRepository {
     {
 
         $this->request = $request;
+    }
+
+    public function LogError($methodName, $errorMessage, $errorDetail) {
+        $errorlogs = new ErrorLogs();
+        $now = (new DateTime('now'))->format('yyyy-mm-dd h:m:s');
+        $errorlogs->dateLogged = (string)$now;
+        $errorlogs->MethodName = $methodName;
+        $errorlogs->ErrorMessage =  $errorMessage;
+        $errorlogs->ErrorDetails = $errorDetail;
+
+        $errorlogs->save();
+
     }
     public function GetAllBooks()
     {

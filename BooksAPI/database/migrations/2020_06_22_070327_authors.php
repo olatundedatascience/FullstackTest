@@ -18,6 +18,8 @@ class Authors extends Migration
                 $table->bigIncrements("id");
                 $table->string("fullname");
                 $table->string("emailAddress");
+                $table->unassignedBigIncrements("books_id");
+                $table->foreign("books_id")->references("id")->on("books");
 
         });
         */

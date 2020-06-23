@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddBookIdForeignToAuthors extends Migration
+class AddDateLoggedToErrolog extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,9 @@ class AddBookIdForeignToAuthors extends Migration
     public function up()
     {
         /*
-        Schema::table('authors', function (Blueprint $table) {
+        Schema::table('errorlogs', function (Blueprint $table) {
             //
-           // $table->unsignedBigInteger("books_id");
-            $table->foreign("books_id","books_id_author")->references("id")->on("books");
+            $table->string("dateLogged");
         });
         */
     }
@@ -29,7 +28,7 @@ class AddBookIdForeignToAuthors extends Migration
      */
     public function down()
     {
-        Schema::table('authors', function (Blueprint $table) {
+        Schema::table('errorlogs', function (Blueprint $table) {
             //
         });
     }
