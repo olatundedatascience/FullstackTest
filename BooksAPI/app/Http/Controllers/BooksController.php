@@ -21,12 +21,25 @@ class BooksController extends Controller
         $this->_book_repo = new BookRepository();
     }
     public function GetAll(Request $request) {
-        $reponseObject = new stdClass();
-        $reponseObject->status_code = 200;
-        $reponseObject->status ="success";
-        $reponseObject->data = $this->_book_repo->GetAllBooks();
+        try {
+            $reponseObject = new stdClass();
+            $reponseObject->status_code = 200;
+            $reponseObject->status ="success";
+            $reponseObject->data = $this->_book_repo->GetAllBooks();
 
-        return response(json_encode($reponseObject), "200", ["Content-Type"=>"application/json"]);
+            return response(json_encode($reponseObject), "200", ["Content-Type"=>"application/json"]);
+
+
+        }
+        catch(Exception $ex) {
+            $this->_book_repo->LogError("GetAllBooks", $ex->getMessage(),  $ex->getFile()." at line ".$ex->getLine());
+                    $reponseObject = new stdClass();
+                    $reponseObject->status_code = 500;
+                    $reponseObject->status ="failed";
+                    $reponseObject->message = "An Error has occured";
+                return response(json_encode($reponseObject), "500", ["Content-Type"=>"application/json"]);
+        }
+
     }
 
     public function AddNewBook(Request $request) {

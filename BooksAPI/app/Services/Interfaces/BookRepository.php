@@ -84,36 +84,49 @@ class BookRepository implements IBookRepository {
         }
         else {
 
-            $result = DB::table("books")->insertGetId([
-                "name"=>$this->request->json("name"),
-                "number_of_pages"=> $this->request->json("number_of_pages"),
-               // "isbn" => $this->request->json("isbn"),
-                "country" => $this->request->json("country"),
-                "publisher" => $this->request->json("publisher"),
-                "release_date" => $this->request->json("release_date")
-            ]);
+            if(!empty($this->request->json("name")) || $this->request->json(("name") != null)) {
 
-            if($result > 0) {
-                $book_id = $result;
-                $authors = $this->request->json("authors");
-                $_insert_author = 0;
-                foreach($authors as $author) {
-                    $author_insert = DB::table("authors")->insertGetId([
-                        "fullname"=>$author["fullname"],
-                        "emailAddress"=>$author["emailAddress"],
-                        'books_id' => $result
-                        //"books_id">$result
-                    ]);
-                    $_insert_author = $author_insert;
+                $result = DB::table("books")->insertGetId([
+                    "name"=>$this->request->json("name"),
+                    "number_of_pages"=> $this->request->json("number_of_pages"),
+                   // "isbn" => $this->request->json("isbn"),
+                    "country" => $this->request->json("country"),
+                    "publisher" => $this->request->json("publisher"),
+                    "release_date" => $this->request->json("release_date")
+                ]);
+
+                if($result > 0) {
+                    $book_id = $result;
+                    $authors = $this->request->json("authors");
+                    $_insert_author = 0;
+                    foreach($authors as $author) {
+                        $author_insert = DB::table("authors")->insertGetId([
+                            "fullname"=>$author["fullname"],
+                            "emailAddress"=>$author["emailAddress"],
+                            'books_id' => $result
+                            //"books_id">$result
+                        ]);
+                        $_insert_author = $author_insert;
+                    }
+
+                   $book_created = $this->getBookDetails($result);
+
+                   return count($book_created) > 0 ? $book_created : null;
+                }
+                else {
+                    return null;
                 }
 
-               $book_created = $this->getBookDetails($result);
 
-               return count($book_created) > 0 ? $book_created : null;
             }
             else {
-                return null;
+                $response = ["error"=>"name is required"];
+                return $response;
             }
+
+
+
+
 
         }
 
